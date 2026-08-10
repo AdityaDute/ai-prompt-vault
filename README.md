@@ -2,7 +2,7 @@
 
 Full-stack Next.js app to save, browse, search, and share AI prompts — built with TypeScript, Tailwind CSS, and the App Router.
 
-🔗 **Live:** [your-url.vercel.app](#)
+🔗 **Live:** [https://ai-prompt-vault-sigma.vercel.app/](#)
 💻 **Repo:** you're looking at it
 
 ---
