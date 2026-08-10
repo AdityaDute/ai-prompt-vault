@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 AI Prompt Vault
+
+Full-stack Next.js app to save, browse, search, and share AI prompts — built with TypeScript, Tailwind CSS, and the App Router.
+
+🔗 **Live:** [your-url.vercel.app](#)
+💻 **Repo:** you're looking at it
+
+---
+
+## Features
+
+- 🔍 Browse and search prompts with live category filtering
+- 📋 One-click copy to clipboard
+- ➕ Create new prompts via a validated form (Server Actions)
+- 🗂️ Category-specific pages
+- 🔌 REST API for prompts and categories
+- 🌓 Dark theme, responsive, animated UI
+- ⚡ SEO metadata, sitemap, and robots.txt out of the box
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14+ (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Icons | Lucide React |
+| Data | JSON file (upgrade path to a database) |
+| Deployment | Vercel |
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/<your-username>/ai-prompt-vault.git
+cd ai-prompt-vault
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+ai-prompt-vault/
+├── app/
+│   ├── layout.tsx              Root layout (navbar + footer)
+│   ├── page.tsx                Home page (hero + featured prompts)
+│   ├── prompts/                Browse, search, filter + [id] detail page
+│   ├── create/                 Create new prompt form
+│   ├── categories/[category]/  Prompts filtered by category
+│   └── api/                    REST routes for prompts + categories
+├── components/                 Navbar, PromptCard, SearchBar, etc.
+├── lib/
+│   ├── types.ts                TypeScript type definitions
+│   ├── data.ts                 Prompt data (JSON storage)
+│   └── utils.ts                Helper functions
+└── public/
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Reference
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/prompts` | Get all prompts |
+| GET | `/api/prompts?category=coding` | Get prompts filtered by category |
+| POST | `/api/prompts` | Create a new prompt |
+| GET | `/api/prompts/[id]` | Get a single prompt |
+| DELETE | `/api/prompts/[id]` | Delete a prompt |
+| GET | `/api/categories` | Get categories with counts |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Data Model
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```typescript
+type Prompt = {
+  id: string;
+  title: string;
+  description: string;
+  prompt: string;
+  category: Category;
+  tags: string[];
+  copyCount: number;
+  createdAt: string;
+  author: string;
+};
+
+type Category =
+  | "coding" | "writing" | "marketing"
+  | "design" | "business" | "education" | "fun";
+```
+
+---
+
+## Roadmap
+
+- [ ] Auth with NextAuth.js
+- [ ] Database (Prisma + PostgreSQL)
+- [ ] Like / bookmark prompts
+- [ ] Analytics dashboard
+- [ ] AI-powered prompt improvement
+- [ ] Shareable links with dynamic OG images
+
+---
+
+## License
+
+MIT
