@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { SAMPLE_PROMPTS } from '@/lib/data';
+import { saveCreatedPrompt } from '@/lib/created-prompt';
 import type { Category, Prompt } from '@/lib/types';
+
+const CATEGORIES: Category[] = ['coding', 'writing', 'marketing', 'design', 'business', 'education', 'fun'];
 
 export async function createPrompt(formData: FormData) {
   const title = String(formData.get('title') ?? '').trim();
@@ -14,7 +16,18 @@ export async function createPrompt(formData: FormData) {
   const tags = String(formData.get('tags') ?? '')
     .split(',')
     .map((tag) => tag.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, 8);
+
+  if (
+    title.length < 3 || title.length > 100 ||
+    description.length < 10 || description.length > 200 ||
+    prompt.length < 20 || prompt.length > 1_200 ||
+    !author || author.length > 100 ||
+    !CATEGORIES.includes(category)
+  ) {
+    throw new Error('Invalid prompt details. Please review the form and try again.');
+  }
 
   const newPrompt: Prompt = {
     id: crypto.randomUUID(),
@@ -28,7 +41,7 @@ export async function createPrompt(formData: FormData) {
     createdAt: new Date().toISOString(),
   };
 
-  SAMPLE_PROMPTS.unshift(newPrompt);
+  await saveCreatedPrompt(newPrompt);
   revalidatePath('/');
   revalidatePath('/prompts');
   revalidatePath(`/categories/${category}`);

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { SAMPLE_PROMPTS } from '@/lib/data';
+import { getCreatedPrompt } from '@/lib/created-prompt';
 import CopyButton from '@/app/components/CopyButton';
 import Link from 'next/link';
 
@@ -7,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const prompt = SAMPLE_PROMPTS.find((p) => p.id === id);
+  const prompt = SAMPLE_PROMPTS.find((p) => p.id === id) ?? await getCreatedPrompt(id);
   if (!prompt) {
     return { title: 'Prompt Not Found' };
   }
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function PromptDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const prompt = SAMPLE_PROMPTS.find((p) => p.id === id);
+  const prompt = SAMPLE_PROMPTS.find((p) => p.id === id) ?? await getCreatedPrompt(id);
 
   if (!prompt) {
     notFound();
