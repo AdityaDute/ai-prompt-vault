@@ -19,7 +19,7 @@ export default function PromptForm() {
 
     if (!title || title.length < 3 || title.length > 100) newErrors.title = 'Title must be 3-100 characters';
     if (!description || description.length < 10 || description.length > 200) newErrors.description = 'Description must be 10-200 characters';
-    if (!prompt || prompt.length < 20 || prompt.length > 1200) newErrors.prompt = 'Prompt must be 20-1,200 characters';
+    if (!prompt || prompt.length < 20) newErrors.prompt = 'Prompt must be at least 20 characters';
     if (!author) newErrors.author = 'Author is required';
 
     setErrors(newErrors);

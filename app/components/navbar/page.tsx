@@ -2,15 +2,37 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BotMessageSquare } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { BotMessageSquare, Moon, Sun } from 'lucide-react';
 
 const navigation = [
   { href: '/', label: 'Home' },
   { href: '/prompts', label: 'Browse prompts' },
 ];
 
+function applyTheme(theme: 'dark' | 'light') {
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.documentElement.dataset.theme = theme;
+}
+
 export default function Navbar() {
   const pathname = usePathname();
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      setTheme(savedTheme);
+      applyTheme(savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    applyTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
@@ -38,6 +60,16 @@ export default function Navbar() {
               </Link>
             );
           })}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            aria-pressed={theme === 'light'}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
           <Link
             href="/create"
             className="ml-1 rounded-lg bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 sm:px-4"

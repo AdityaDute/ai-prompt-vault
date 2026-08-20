@@ -10,6 +10,59 @@ body{
   color:var(--foreground);
 }
 
+html[data-theme='light'] {
+  color-scheme: light;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+html.light,
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light .bg-black,
+html.light .bg-gray-900 {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-gray-950 {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-gray-800 {
+  background-color: #e2e8f0 !important;
+}
+
+html.light .bg-black\/80,
+html.light .bg-white\/10 {
+  background-color: rgb(255 255 255 / 0.86) !important;
+}
+
+html.light .border-gray-700,
+html.light .border-gray-800,
+html.light .border-white\/10 {
+  border-color: #cbd5e1 !important;
+}
+
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-400 {
+  color: #475569 !important;
+}
+
+html.light .text-gray-500,
+html.light .text-gray-600 {
+  color: #64748b !important;
+}
+
 @layer utilities {
   .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
